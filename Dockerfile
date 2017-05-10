@@ -29,6 +29,7 @@ RUN apt-get update \
     libfreetype6-dev \
     libssl-dev \
     libmcrypt-dev \
+    nginx \
   && rm -rf /var/lib/apt/lists/*
 
 # Install the PHP extention
