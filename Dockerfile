@@ -33,7 +33,6 @@ RUN apt-get update \
 
 # Install the PHP extention
 RUN docker-php-source extract && \
-  docker-php-ext-enable redis && \
   docker-php-ext-install mcrypt && \
   docker-php-ext-install mysqli && \
   docker-php-ext-install pdo && \
