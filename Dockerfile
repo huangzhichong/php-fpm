@@ -4,9 +4,9 @@
 #--------------------------------------------------------------------------
 #
 
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
+MAINTAINER Smart Huang <smart.huang@istuary.com>
 
 #
 #--------------------------------------------------------------------------
@@ -18,34 +18,32 @@ MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
 
 # Install "curl", "libmemcached-dev", "libpq-dev", "libjpeg-dev",
 #         "libpng12-dev", "libfreetype6-dev", "libssl-dev", "libmcrypt-dev",
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        curl \
-        libmemcached-dev \
-        libz-dev \
-        libpq-dev \
-        libjpeg-dev \
-        libpng12-dev \
-        libfreetype6-dev \
-        libssl-dev \
-        libmcrypt-dev
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+    curl \
+    libmemcached-dev \
+    libz-dev \
+    libpq-dev \
+    libjpeg-dev \
+    libpng12-dev \
+    libfreetype6-dev \
+    libssl-dev \
+    libmcrypt-dev \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install the PHP mcrypt extention
-RUN docker-php-ext-install mcrypt
-
-# Install the PHP pdo_mysql extention
-RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install mysqli
-
-# Install the PHP pdo_pgsql extention
-RUN docker-php-ext-install pdo_pgsql
-#####################################
-# gd:
-#####################################
-
-# Install the PHP gd library
-RUN docker-php-ext-configure gd \
+# Install the PHP extention
+RUN docker-php-source extract && \
+  docker-php-ext-enable redis && \
+  docker-php-ext-install mcrypt && \
+  docker-php-ext-install mysqli && \
+  docker-php-ext-install pdo && \
+  docker-php-ext-install pdo_mysql && \
+  docker-php-ext-install mbstring && \
+  docker-php-ext-install tokenizer && \
+  docker-php-ext-configure gd \
         --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 && \
-    docker-php-ext-install gd
+        --with-freetype-dir=/usr/include/freetype2 \
+        --with-png-dir=/usr/include \
+        --with-jpeg-dir=/usr/include  && \
+  docker-php-ext-install gd && \
+  docker-php-source delete
