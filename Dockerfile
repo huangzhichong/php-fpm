@@ -31,7 +31,7 @@ RUN apt-get update \
     libmcrypt-dev \
     nginx \
     supervisor \
-  && mkdir -p /var/log/supervisor
+  && mkdir -p /var/log/supervisor \
   && rm -rf /var/lib/apt/lists/*
 
 # Install the PHP extention
