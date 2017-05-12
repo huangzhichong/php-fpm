@@ -4,8 +4,7 @@
 #--------------------------------------------------------------------------
 #
 
-FROM php:7.1-fpm
-
+FROM hub.c.163.com/library/php:7.1.2-fpm
 MAINTAINER Smart Huang <smart.huang@istuary.com>
 
 #
